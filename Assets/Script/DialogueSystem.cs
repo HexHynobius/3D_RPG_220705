@@ -6,6 +6,8 @@ using TMPro;
 
 namespace Hyno
 {
+    public delegate void DelegateFinishDialogue();
+
     /// <summary>
     /// 對話系統
     /// </summary> 
@@ -23,17 +25,58 @@ namespace Hyno
         [SerializeField, Header("三角形")]
         private GameObject goTriangle;
 
-        public DataNPC dataNpc;
+        [SerializeField, Header("淡入間隔")]
+        private float intervalFadeIn = 0.1f;
+        [SerializeField, Header("打字間隔")]
+        private float intervalType = 0.1f;
+
+
+
+        private DataNPC dataNpc;
 
         private void Awake()
         {
             aud = GetComponent<AudioSource>();
 
-            StartCoroutine(FadeIn());
+            //StartCoroutine(Fade());
 
-            textName.text =dataNpc.nameNPC;
-            textContent.text = "";
+            //StartCoroutine(StartDialogue());
         }
+
+        #region 公開資料
+        /// <summary>
+        /// 是否在對話中
+        /// </summary>
+        public bool isDialogue;
+
+        public IEnumerator StartDialogue(DataNPC _dataNPC,DelegateFinishDialogue callback)
+        {
+            isDialogue = true;
+
+            dataNpc = _dataNPC;
+
+            textName.text = dataNpc.nameNPC;
+            textContent.text = "";
+
+            yield return StartCoroutine(Fade());
+
+            for (int i = 0; i < dataNpc.dataDialogue.Length; i++)
+            {
+                yield return StartCoroutine(TypeEffext(i));
+
+                while(!Input.GetKeyDown(KeyCode.E))
+                {
+                    yield return null;
+                }
+            }
+
+            StartCoroutine(Fade(false)); ;
+
+            isDialogue =false;
+
+            callback();
+        }
+        #endregion 
 
         /* 練習
         /// <summary>
@@ -50,28 +93,31 @@ namespace Hyno
         }
         */
 
-        private IEnumerator FadeIn()
+        private IEnumerator Fade(bool fadeIn=true)
         {
             goTriangle.SetActive(false);
 
+            float increase = fadeIn ? 0.1f : -0.1f;
+
             for (int i = 0; i < 10; i++)
             {
-                groupDialogue.alpha += 0.1f;
-                yield return new WaitForSeconds(0.1f);
+                groupDialogue.alpha += increase;
+                yield return new WaitForSeconds(intervalFadeIn);
             }
-            StartCoroutine(TypeEffext());
         }
 
-        private IEnumerator TypeEffext()
+        private IEnumerator TypeEffext(int indexDialogue)
         {
-            aud.PlayOneShot(dataNpc.dataDialogue[0].sound);
+            textContent.text = "";
 
-            string content = dataNpc.dataDialogue[0].content;
+            aud.PlayOneShot(dataNpc.dataDialogue[indexDialogue].sound);
+
+            string content = dataNpc.dataDialogue[indexDialogue].content;
 
             for (int i = 0; i < content.Length; i++)
             {
                 textContent.text += content[i];
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(intervalType);
             }
 
             goTriangle.SetActive(true);

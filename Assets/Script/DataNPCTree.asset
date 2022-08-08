@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243ee7ba3b9f84145a9a22ec5bdcf5a3, type: 3}
+  m_Name: DataNPCTree
+  m_EditorClassIdentifier: 
+  nameNPC: "\u6A39"
+  dataDialogue:
+  - content: ...
+    sound: {fileID: 8300000, guid: 4c83c48917ba64a0596defd48992603c, type: 3}
+  - content: ...
+    sound: {fileID: 8300000, guid: 4c83c48917ba64a0596defd48992603c, type: 3}
+  - content: ...
+    sound: {fileID: 8300000, guid: 4c83c48917ba64a0596defd48992603c, type: 3}
