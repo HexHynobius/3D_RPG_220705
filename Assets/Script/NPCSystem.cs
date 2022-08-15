@@ -91,7 +91,7 @@ namespace Hyno
                 //throw;
             }
             //if (ani) aniTip.SetTrigger(parTipFade);
-            ani.SetBool(parDialogue, false);
+            //ani.SetBool(parDialogue, false);
         }
     }
 }
