@@ -20,10 +20,13 @@ namespace Hyno
         #endregion
         private float timerIdle;
 
+        private EnemyAttack enemyAttack;
+
         #region 事件
         private void Awake()
         {
             ani = GetComponent<Animator>();
+            enemyAttack=GetComponent<EnemyAttack>();
             nma = GetComponent<NavMeshAgent>();
             nma.speed = dataEnemy.seepWalk;
         }
@@ -87,7 +90,7 @@ namespace Hyno
             //nma.velocity = Vector3.zero;
             ani.SetBool(parWalk, false);
             timerIdle += Time.deltaTime;
-            print("等待時間" + timerIdle);
+            //print("等待時間" + timerIdle);
 
             float r = Random.Range(dataEnemy.timeIdleRange.x, dataEnemy.timeIdleRange.y);
 
@@ -97,22 +100,36 @@ namespace Hyno
                 stateEnemy = StateEnemy.Wander;
             }
         }
-
+        /// <summary>
+        /// 索敵
+        /// </summary>
         private void Track()
         {
+            if (ani.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                nma.velocity = Vector3.zero;
+            }
+
             nma.SetDestination(v3TargetPosition);
             ani.SetBool(parWalk, true);
+            ani.ResetTrigger(parAttack);
 
-            if (Vector3.Distance(transform.position,v3TargetPosition) <= dataEnemy.rangAttack)
+            if (Vector3.Distance(transform.position, v3TargetPosition) <= dataEnemy.rangAttack)
             {
                 stateEnemy = StateEnemy.Attack;
                 //print("進入攻擊狀態");
             }
+            else
+            {
+                timerAttack = dataEnemy.intervalAttack;
+            }
         }
         private float timerAttack;
-        private string parAttack="觸發攻擊";
+        private string parAttack = "觸發攻擊";
 
-
+        /// <summary>
+        /// 攻擊間隔
+        /// </summary>
         private void Attack()
         {
             ani.SetBool(parWalk, false);
@@ -126,12 +143,15 @@ namespace Hyno
             {
                 ani.SetTrigger(parAttack);
                 timerAttack = 0;
+                enemyAttack.StartAttack();
+                stateEnemy = StateEnemy.Track;
             }
         }
-
+        /// <summary>
+        /// 判斷索敵範圍內
+        /// </summary>
         private void CheckerTargetInTrackRange()
         {
-            if (stateEnemy == StateEnemy.Attack) return;
 
             Collider[] hits = Physics.OverlapSphere(transform.position, dataEnemy.rangTrack, dataEnemy.layerTarget);
 
@@ -139,7 +159,12 @@ namespace Hyno
             {
                 //print("碰撞的物件" + hits[0].name);
                 v3TargetPosition = hits[0].transform.position;
+                if (stateEnemy == StateEnemy.Attack) return;
                 stateEnemy = StateEnemy.Track;
+            }
+            else
+            {
+                stateEnemy = StateEnemy.Wander;
             }
         }
 

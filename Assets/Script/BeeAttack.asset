@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7c23a0436d40348816c44aff978eac, type: 3}
+  m_Name: BeeAttack
+  m_EditorClassIdentifier: 
+  attack: 100
+  attackAreaColor: {r: 1, g: 0, b: 0, a: 0.5}
+  attackAreaSize: {x: 1, y: 1, z: 1}
+  attackAreaoffset: {x: 0, y: 0, z: 0.5}
+  layerTarget:
+    serializedVersion: 2
+    m_Bits: 8
+  delayAttack: 0.5
+  animationAttack: {fileID: 7400000, guid: 27a32759d4052dc4e92960cc22f85b43, type: 3}
