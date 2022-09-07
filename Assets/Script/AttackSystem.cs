@@ -7,10 +7,19 @@ namespace Hyno
 {
     public class AttackSystem : MonoBehaviour
     {
-        [SerializeField,Header("攻擊資料")]
+        [SerializeField, Header("攻擊資料")]
         private DataAttack dataAttack;
+        [SerializeField, Header("攻擊動畫名稱")]
+        private string nameAnimation;
 
         protected bool canAttack = true;
+        protected Animator ani;
+
+        protected virtual void Awake()
+        {
+            ani=GetComponent<Animator>();
+        }
+
 
         private void OnDrawGizmos()
         {
@@ -35,12 +44,12 @@ namespace Hyno
         }
         private IEnumerator AttackFlow()
         {
-            canAttack= false;
+            canAttack = false;
             yield return new WaitForSeconds(dataAttack.delayAttack);
             CheckAttackArea();
 
             yield return new WaitForSeconds(dataAttack.waitAttackEnd);
-            canAttack= true;
+            canAttack = true;
             StopAttack();
         }
 
@@ -51,21 +60,21 @@ namespace Hyno
 
         private void CheckAttackArea()
         {
+            //有bug
+            //if (ani.GetCurrentAnimatorStateInfo(0).IsName(nameAnimation)) return;
+
             Collider[] hits = Physics.OverlapBox(
                 transform.position +
                 transform.TransformDirection(dataAttack.attackAreaoffset),
                 dataAttack.attackAreaSize * 0.5f,
                 transform.rotation, dataAttack.layerTarget);
 
-            if (hits.Length>0)
+            if (hits.Length > 0)
             {
-                print(hits[0].name);
+                hits[0].GetComponent<HealthSystem>().Hurt(dataAttack.attack);
             }
-            
+
         }
-
-        
-
     }
 
 

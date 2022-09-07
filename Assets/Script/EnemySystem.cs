@@ -50,6 +50,11 @@ namespace Hyno
         }
         #endregion
 
+        private void OnDisable()
+        {
+            //nma.Stop(); //綠色蚯蚓 是 過時API
+            nma.isStopped = true;
+        }
 
         #region 方法
 

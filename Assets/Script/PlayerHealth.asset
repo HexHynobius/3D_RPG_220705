@@ -9,18 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300f8ec27d7b23b42892fdb4089f86ab, type: 3}
-  m_Name: Bee
+  m_Script: {fileID: 11500000, guid: 841a2832a9438814882327aac5e44657, type: 3}
+  m_Name: PlayerHealth
   m_EditorClassIdentifier: 
-  hp: 2000
-  attack: 100
-  rangTrack: 6
-  rangAttack: 1
-  seepWalk: 3
-  propbilityProp: 1
+  hp: 1000
+  isDropProp: 0
   goProp: {fileID: 0}
-  timeIdleRange: {x: 2, y: 5}
-  layerTarget:
-    serializedVersion: 2
-    m_Bits: 8
-  intervalAttack: 0.8
+  propProbability: 0

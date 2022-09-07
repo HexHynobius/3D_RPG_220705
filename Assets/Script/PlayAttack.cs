@@ -7,14 +7,13 @@ namespace Hyno
 {
     public class PlayAttack : AttackSystem
     {
-        private Animator ani;
         private ThirdPersonController tpc;
 
         private string parAttack = "§ðÀ»";
 
-        private void Awake()
+        protected override void Awake()
         {
-            ani =GetComponent<Animator>();
+            base.Awake();
             tpc = GetComponent<ThirdPersonController>();
         }
         private void Update()
