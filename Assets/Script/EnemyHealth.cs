@@ -9,10 +9,14 @@ namespace Hyno
         private EnemySystem enemySystem;
 
 
+        private ObjectPoolItem objectPoolItem;
+
         protected override void Awake()
         {
             base.Awake();
             enemySystem = GetComponent<EnemySystem>();
+
+            objectPoolItem =FindObjectOfType<ObjectPoolItem>();
         }
         protected override void Dead()
         {
@@ -31,6 +35,10 @@ namespace Hyno
                     dataHealth.goProp,
                     transform.position+Vector3.up,
                     Quaternion.identity);
+
+                GameObject tempObject = objectPoolItem.GetPoolObject();
+                tempObject.transform.position = transform.position + Vector3.up * 3;
+
             }
             
         }
