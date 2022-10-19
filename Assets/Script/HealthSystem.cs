@@ -10,9 +10,9 @@ namespace Hyno
         [SerializeField, Header("血量資料")]
         protected DataHealth dataHealth;
         [SerializeField, Header("血量")]
-        private Image imgHealth;
+        protected Image imgHealth;
 
-        private float hp;
+        protected float hp;
         private Animator ani;
         private string parHurt = "觸發受傷";
         private string parDead = "觸發死亡";

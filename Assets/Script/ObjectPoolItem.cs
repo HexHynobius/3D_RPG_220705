@@ -19,8 +19,6 @@ namespace Hyno
         private void Awake()
         {
             poolItem = new ObjectPool<GameObject>(CreatePool, GetObject, ReleaseObject, DestroyObject, false, countMaxItem);
-
-            InvokeRepeating("Spawn", 0, 0.1f);
         }
 
         /// <summary>
@@ -48,7 +46,7 @@ namespace Hyno
             Item.SetActive(false);
         }
 
-        private void DestroyObject(GameObject Item)
+        public void DestroyObject(GameObject Item)
         {
             Destroy(Item);
         }
@@ -59,7 +57,7 @@ namespace Hyno
         }
 
 
-        private void ReleasePoolObject(GameObject Item)
+        public void ReleasePoolObject(GameObject Item)
         {
             poolItem.Release(Item);
         }
